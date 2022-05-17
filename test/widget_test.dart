@@ -7,13 +7,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:sample_app/main.dart';
+import '../lib/widgets/my_app.dart';
+import '../lib/widgets/list_item.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget(MyApp(
+      items: List<ListItem>.generate(
+        100,
+        (i) => i % 6 == 0
+            ? HeadingItem('Heading $i')
+            : MessageItem('Sender $i', 'Message body $i'),
+      ),
+    ));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
